@@ -1,0 +1,21 @@
+#include <Servo.h>
+9#define SER 3 //Pin para el servo
+Servo servo; //Objeto servo
+int mssg; // Variable para guardar el mensaje recibido por serial
+void setup()
+{
+  //Inicializamos el servo y el Serial:
+  //El usuario ingresa un angulo de 0 a 180 y el servo gira ese angulo
+  servo.attach(SER);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+   if (Serial.available() > 0)
+   {
+     mssg = Serial.parseInt(); //Leemos el serial
+     servo.write(mssg); //Movemos el servo
+     delay(50);
+   }
+}
