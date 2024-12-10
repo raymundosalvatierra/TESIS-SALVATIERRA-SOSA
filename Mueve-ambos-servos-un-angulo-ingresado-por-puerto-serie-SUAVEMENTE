@@ -1,0 +1,36 @@
+//Mueve-ambos-servos-un-angulo-ingresado-por-puerto-serie-SUAVEMENTE
+#include <ESP32Servo.h>
+Servo servo1;
+Servo servo2;
+int pinServo1 = 2;
+int pinServo2 = 4;
+int mssg; //variable para recibir el mensaje recibido por serial
+
+void setup() 
+{
+    servo1.attach(pinServo1);
+    servo2.attach(pinServo2);
+    Serial.begin(9600);
+}
+void loop() 
+{   
+   if (Serial.available() > 0)
+     {
+       mssg = Serial.parseInt(); //Leemos el serial y lo asignamos a mssg
+        for(int i = 0; i<mssg ; i++)
+        {
+        servo1.write(i); //Muevo el servo1 a mssg grados
+        servo2.write(i); //Muevo el servo2 a mssg grados
+        delay(20);
+        }
+        delay(500);
+
+        for(int i = mssg; i>0 ; i--)
+        {
+        servo1.write(i); //Muevo el servo1 a mssg grados
+        servo2.write(i); //Muevo el servo2 a mssg grados
+        delay(20);
+        }
+        delay(500);
+   }
+}
